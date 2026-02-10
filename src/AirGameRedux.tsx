@@ -2,6 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { tick, addResource } from "./gameSlice";
 import { addTask, updateTaskProgress, completeTask } from "./taskSlice";
+import { Button } from "@/components/ui/button";
+import { Progress } from "./components/ui/progress";
+import { Item, ItemTitle } from "./components/ui/item";
 
 const AirGameRedux: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -106,21 +109,9 @@ const AirGameRedux: React.FC = () => {
         Air: {air.toFixed(1)}
       </div>
 
-      <button
-        onClick={handleAddAirTask}
-        style={{
-          padding: "10px 20px",
-          fontSize: "16px",
-          cursor: "pointer",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-          marginBottom: "20px",
-        }}
-      >
+      <Button variant="outline" onClick={handleAddAirTask}>
         Add Air Task
-      </button>
+      </Button>
 
       <div>
         <h3>Task Queue ({taskQueue.length})</h3>
@@ -129,61 +120,25 @@ const AirGameRedux: React.FC = () => {
         ) : (
           <div>
             {taskQueue.map((task, index) => (
-              <div
+              <Item
                 key={task.id}
-                style={{
-                  marginBottom: "10px",
-                  padding: "10px",
-                  backgroundColor: index === 0 ? "#e3f2fd" : "#f5f5f5",
-                  borderRadius: "4px",
-                  border: index === 0 ? "2px solid #2196F3" : "1px solid #ddd",
-                }}
+                variant="outline"
               >
-                <div style={{ marginBottom: "5px" }}>
+                <ItemTitle >
                   Task #{task.id} {index === 0 ? "(Processing)" : "(Queued)"}
                   {" - "} Reward: +{task.reward.amount} {task.reward.resource}
-                </div>
-                {index === 0 && (
-                  <div
-                    style={{
-                      width: "100%",
-                      backgroundColor: "#ddd",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: `${Math.min(task.progress * 100, 100)}%`,
-                        height: "20px",
-                        backgroundColor: "#4CAF50",
-                        borderRadius: "4px",
-                        transition: "width 0.1s",
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
+                </ItemTitle >
+                {index === 0 && (<Progress id={`task-${task.id}-progress`} value={Math.min(task.progress * 100, 100)} />)}
+              </Item>
             ))}
           </div>
         )}
       </div>
 
-      <div
-        style={{
-          marginTop: "20px",
-          padding: "10px",
-          backgroundColor: "#f0f0f0",
-          borderRadius: "4px",
-          fontSize: "14px",
-        }}
-      >
-        <strong>Game Status:</strong>{" "}
+      <Item variant="outline">
+        <ItemTitle>Game Status:</ItemTitle>
         {taskQueue.length > 0 ? "▶️ Running" : "⏸️ Paused"}
-        <br />
-        <em>
-          Open Redux DevTools (F12 → Redux tab) for time-travel debugging!
-        </em>
-      </div>
+      </Item>
     </div>
   );
 };
