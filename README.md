@@ -31,7 +31,7 @@ src/
 4. Features you get:
    - **Action Log**: See every action dispatched (tick, addTask, addResource, etc.)
    - **State Tree**: Inspect current state at any point
-   - **Time Travel**: 
+   - **Time Travel**:
      - Slider to scrub through action history
      - Jump to any previous state
      - See how state changed with each action
@@ -41,6 +41,7 @@ src/
 ## Time-Travel Debugging Tips
 
 **Debugging a bug:**
+
 1. Reproduce the bug
 2. Open Redux DevTools
 3. Use the slider to go back in time
@@ -49,6 +50,7 @@ src/
 6. Check state before/after
 
 **Balancing resources:**
+
 1. Play for a bit
 2. Export state to JSON
 3. Adjust numbers in your code
@@ -56,6 +58,7 @@ src/
 5. Test from that exact point
 
 **Testing edge cases:**
+
 - Dispatch actions manually from DevTools console
 - Set resources to specific values
 - Skip forward/backward to test different scenarios
